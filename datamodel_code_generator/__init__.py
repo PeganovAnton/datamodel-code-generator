@@ -237,6 +237,7 @@ def get_first_file(path: Path) -> Path:  # pragma: no cover
 def generate(
     input_: Union[Path, str, ParseResult],
     *,
+    return_as_str: bool = False,
     input_filename: Optional[str] = None,
     input_file_type: InputFileType = InputFileType.Auto,
     output: Optional[Path] = None,
@@ -481,8 +482,16 @@ def generate(
     if not results:
         raise Error('Models not found in the input data')
     elif isinstance(results, str):
-        modules = {output: (results, input_filename)}
+        if return_as_str:
+            return results
+        else:
+            modules = {output: (results, input_filename)}
     else:
+        if return_as_str:
+            if len(results) == 1:
+                return list(results.values())[0].body
+            else:
+                raise Error(f"Cannot return a string if multiple modules were generated. The generated model contains {len(results)}")
         if output is None:
             raise Error('Modular references require an output directory')
         if output.suffix:
