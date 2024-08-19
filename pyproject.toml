@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datamodel-code-generator"
-version = "0.0.0"
+version = "v0.25.9"
 description = "Datamodel Code Generator"
 authors = ["Koudai Aono <koxudaxi@gmail.com>"]
 readme = "README.md"
